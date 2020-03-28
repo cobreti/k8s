@@ -12,6 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# Access dashboard using URL
+#
+#   https://localhost:30000/#/overview?namespace=default
+#
+
+
 apiVersion: v1
 kind: Namespace
 metadata:
