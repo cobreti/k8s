@@ -20,6 +20,7 @@ spec:
   tls:
     - hosts: 
         - dashboard.minikube.local
+        - dashboard.docker.local
       secretName: tls-secret
   rules:
     - host: dashboard.minikube.local
@@ -33,3 +34,15 @@ spec:
             backend:
               serviceName: kubernetes-dashboard
               servicePort: 80
+    - host: dashboard.docker.local
+      http:
+        paths:
+          - path: /($1)
+            backend:
+              serviceName: kubernetes-dashboard
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: kubernetes-dashboard
+              servicePort: 80
+
