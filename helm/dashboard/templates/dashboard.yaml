@@ -12,16 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# Access dashboard using URL
-#
-#   https://localhost:30000/#/overview?namespace=default
-#
-# for chrome :
-#   chrome://flags/#allow-insecure-localhost
-#
-
-
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -47,11 +37,9 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
 spec:
-  type: NodePort
   ports:
     - port: 443
       targetPort: 8443
-      nodePort: 30000
   selector:
     k8s-app: kubernetes-dashboard
 
@@ -199,16 +187,15 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.0.0-rc7
+          image: kubernetesui/dashboard:v2.0.4
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
               protocol: TCP
           args:
             - --enable-skip-login
-            - --disable-settings-authorizer        
+            - --disable-settings-authorizer
             - --auto-generate-certificates
-            # - --auto-generate-certificates
             - --namespace=kubernetes-dashboard
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
@@ -240,7 +227,7 @@ spec:
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -307,7 +294,7 @@ spec:
             runAsGroup: 2001
       serviceAccountName: kubernetes-dashboard
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -315,4 +302,3 @@ spec:
       volumes:
         - name: tmp-volume
           emptyDir: {}
-
