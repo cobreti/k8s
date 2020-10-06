@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+  docker-registry:
+    image: registry.hub.docker.com/library/registry
+    ports:
+      - "5000:5000"
