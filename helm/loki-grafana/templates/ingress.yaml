@@ -32,11 +32,11 @@ spec:
         paths:
           - path: /($1)
             backend:
-              serviceName: loki-grafana
+              serviceName: grafana
               servicePort: 80
           - path: /
             backend:
-              serviceName: loki-grafana
+              serviceName: grafana
               servicePort: 80
     - host: loki.docker.local
       http:
