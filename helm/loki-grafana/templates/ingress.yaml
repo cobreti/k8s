@@ -49,7 +49,6 @@ spec:
             backend:
               serviceName: loki
               servicePort: 3100
-
     - host: prometheus.docker.local
       http:
         paths:
@@ -61,3 +60,14 @@ spec:
             backend:
               serviceName: grafana-prometheus-server
               servicePort: 80
+    - host: consului.docker.local
+      http:
+        paths:
+          - path: /($1)
+            backend:
+              serviceName: consul-ui
+              servicePort: 8500
+          - path: /
+            backend:
+              serviceName: consul-ui
+              servicePort: 8500

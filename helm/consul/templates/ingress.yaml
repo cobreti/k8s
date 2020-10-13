@@ -16,7 +16,7 @@ metadata:
     ingress.kubernetes.io/enable-ssl-passthrough: 'true'
 spec:
   rules:
-    - host: consul.docker.local
+    - host: consului.docker.local
       http:
         paths:
           - path: /($1)

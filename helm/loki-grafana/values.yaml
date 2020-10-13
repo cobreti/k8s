@@ -2,6 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+#
+# use the following configuration on the command line to set consul scraping
+#
+#   --set-file loki-stack.prometheus.extraScrapeConfigs=./helm/loki-grafana/prometheus-consul-config.yaml
+#
+
+
 replicaCount: 1
 
 namespace: loki
@@ -19,6 +26,40 @@ loki-stack:
   #     enabled: true
   #     storageClassName: standard
   #     size: 1Gi
+
+consul:
+  global:
+    name: consul
+    datacenter: dc1
+  client:
+    enabled: true
+  ui:
+    enabled: true    
+  server:
+    # specify that this Consul datacenter should run one server
+    replicas: 1
+    bootstrapExpect: 1
+    disruptionBudget:
+      enabled: true
+      maxUnavailable: 0
+  connectInject:
+    enabled: true
+    # inject an envoy sidecar into every new pod,
+    # except for those with annotations that prevent injection
+    default: true
+    # these settings enable L7 metrics collection and were added in 1.5
+    centralConfig:
+      enabled: true
+      # set the default protocol (can be overwritten with annotations)
+      defaultProtocol: 'http'
+      # proxyDefaults is a raw json string that will be applied to all service mesh
+      # proxy sidecar pods that can include any valid configuration for the
+      # configured proxy.
+      proxyDefaults: |
+        {
+          "envoy_prometheus_bind_addr": "0.0.0.0:9102"
+        }
+
 
 image:
   repository: nginx
