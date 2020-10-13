@@ -23,6 +23,13 @@ version: 0.1.0
 appVersion: 1.16.0
 
 
+#
+# documentation on settings for grafana/loki/prometheus
+#
+#   https://grafana.com/docs/loki/latest/installation/helm/
+#
+
+
 dependencies:
   - name: loki-stack
     version: "0.40.1"
