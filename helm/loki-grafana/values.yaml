@@ -61,6 +61,11 @@ consul:
         }
 
 
+prometheus-consul-exporter:
+  consul:
+    server: "consul-server:8500"
+
+
 image:
   repository: nginx
   pullPolicy: IfNotPresent
