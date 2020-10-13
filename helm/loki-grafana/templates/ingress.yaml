@@ -50,14 +50,14 @@ spec:
               serviceName: loki
               servicePort: 3100
 
-    - host: prometheus.minikube.local
+    - host: prometheus.docker.local
       http:
         paths:
           - path: /($1)
             backend:
-              serviceName: loki-prometheus-server
+              serviceName: grafana-prometheus-server
               servicePort: 80
           - path: /
             backend:
-              serviceName: loki-prometheus-server
+              serviceName: grafana-prometheus-server
               servicePort: 80
