@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: consul-ui
+  namespace: default
+  annotations:
+    ingress.kubernetes.io/secure-backends: "false"
+    ingress.kubernetes.io/proxy-read-timeout: "3600"
+    ingress.kubernetes.io/proxy-send-timeout: "3600"
+    ingress.kubernetes.io/enable-rewrite-log: 'true'
+    ingress.kubernetes.io/proxy-pass-request-headers: 'true'
+    ingress.kubernetes.io/rewrite-target: /$1
+    ingress.kubernetes.io/service-upstream: 'true'
+    ingress.kubernetes.io/use-regex: 'true'
+    ingress.kubernetes.io/websocket-services: core-service
+    ingress.kubernetes.io/enable-ssl-passthrough: 'true'
+spec:
+  rules:
+    - host: consul.docker.local
+      http:
+        paths:
+          - path: /($1)
+            backend:
+              serviceName: consul-ui
+              servicePort: 8500
+          - path: /
+            backend:
+              serviceName: consul-ui
+              servicePort: 8500
